@@ -15,7 +15,7 @@ public class Window extends JFrame{
 		//set up the window attributes
 		setDefaultCloseOperation(Window.EXIT_ON_CLOSE);
 		
-		setPreferredSize(new Dimension(600,600));
+		setPreferredSize(new Dimension(Game_panel.width*Game_panel.scale,Game_panel.height*Game_panel.scale));
 		pack();
 		
 		setVisible(true);
@@ -33,5 +33,10 @@ public class Window extends JFrame{
 		
 		//start the game menu
 		add(menu_view);
+	}
+	
+	//causes the current panel to be refreshed
+	public void refresh(){
+		game_view.repaint();
 	}
 }
