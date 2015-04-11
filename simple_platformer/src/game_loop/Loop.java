@@ -15,6 +15,7 @@ public class Loop {
 		Timer timer = new Timer();
 		
 		//begins the loop that refreshes the screen
+		//right now this is being done every 60 seconds (60 fps)
 		timer.scheduleAtFixedRate(new Refresh_screen(window),0,1000/60);
 	}
 }

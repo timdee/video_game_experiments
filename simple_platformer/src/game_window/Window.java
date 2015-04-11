@@ -14,11 +14,13 @@ public class Window extends JFrame{
 		
 		//set up the window attributes
 		setDefaultCloseOperation(Window.EXIT_ON_CLOSE);
+		setResizable(false);
+		setFocusable(true);
 		
 		setPreferredSize(new Dimension(Game_panel.width*Game_panel.scale,Game_panel.height*Game_panel.scale));
-		pack();
 		
 		setVisible(true);
+		pack();
 	}
 	
 	public void start_game(){

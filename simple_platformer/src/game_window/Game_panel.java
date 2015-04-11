@@ -16,15 +16,22 @@ public class Game_panel extends Canvas{
 	public static int scale = 3;
 	
 	private Game game;
-	private byte[] pixels;
+	private Color[] pixels;
 	
 	public Game_panel(){
 		super();
 		
 		game=new Platformer();
+		pixels= new Color[width*height*scale*scale];
 		
-		//TODO remove
-		setBackground(Color.RED);
+		for(int i=0;i<pixels.length;i++){
+			pixels[i]=Color.gray;
+		}
+	}
+	
+	@Override
+	public void update(Graphics g){
+		paint(g);
 	}
 	
 	@Override
@@ -37,7 +44,7 @@ public class Game_panel extends Canvas{
 		
 		if(buffer!=null){
 			//draw to buffer
-			update_buffer();
+			update_buffer(buffer);
 			
 			//draw current buffer to the screen
 			g=buffer.getDrawGraphics();
@@ -46,27 +53,37 @@ public class Game_panel extends Canvas{
 			
 			buffer.show();
 		}else{
-			//create the buffer strategy here
+			//create the buffer strategy here (this is just a failsafe)
 			createBufferStrategy(3);
 			return;
 		}
 	}
 	
 	//updates the buffer
-	private void update_buffer(){
-		Graphics g =getBufferStrategy().getDrawGraphics();
-		//TODO draw based on the pixels array
+	private Graphics update_buffer(BufferStrategy buffer){
+		Graphics g =buffer.getDrawGraphics();
 		
-		//draw to g
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, 20, 20);
+		//TODO include a game overlay here
+		
+		// draw based on the pixels array
+		for(int i=0;i<pixels.length;i++){
+			//figure out where we are on the screen
+			int x =i%(width*scale);
+			int y =i/(width*scale);
+			
+			//update one pixel
+			g.setColor(pixels[i]);
+			g.drawLine(x, y, x, y);
+		}
+		
+		return g;
 	}
 	
 	//updates all variables having to do with the game state
 	//update_buffer will interpret and draw the game state
 	private void update_game_state(){
 		//calls methods in Game that update our array of pixels and other things
-		game.update_pixels(pixels,width,height);
+		game.update_pixels(pixels,width*scale,height*scale);
 		
 		return;
 	}
