@@ -28,7 +28,7 @@ public class Game_panel extends Canvas{
 		keyboard_input=new Keyboard_input();
 		addKeyListener(keyboard_input);	
 		
-		game=new Platformer();
+		game=new Platformer(width*scale,height*scale);
 		pixels= new Color[width*height*scale*scale];
 		
 		for(int i=0;i<pixels.length;i++){

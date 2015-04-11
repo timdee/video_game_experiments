@@ -1,47 +1,37 @@
 package characters;
 
 import java.awt.Color;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class Square extends Character_unit{
-	
+public class Floor extends Character_unit {
 	private Color character_color;
 	
-	public Square(){
-		super();
-		
+	public Floor(){
 		x_pos=0;
 		y_pos=0;
-		
-		x_size=50;
-		y_size=50;
-		
-		character_color= Color.pink;
-		speed=20;
+		x_size=100;
+		y_size=100;
+		speed=10;
+		character_color=Color.blue;
 	}
 	
-	public Square(int x, int y){
-		super();
-		
+	public Floor(int x,int y){
 		x_pos=x;
 		y_pos=y;
-		
-		x_size=50;
-		y_size=50;
-		
-		character_color= Color.pink;
-		speed=20;
+		x_size=100;
+		y_size=100;
+		speed=10;
+		character_color=Color.blue;
 	}
 	
-	public Square(int x_pos,int y_pos,int x_size,int y_size){
+	public Floor(int x_pos,int y_pos,int x_size,int y_size){
 		this.x_pos=x_pos;
 		this.y_pos=y_pos;
 		this.x_size=x_size;
 		this.y_size=y_size;
-		speed=20;
+		speed=10;
+		character_color=Color.blue;
 	}
-
+	
 	@Override
 	public void draw(Color[] pixels, int screen_width, int screen_height) {
 		//draws character to the pixel array passed in
@@ -59,8 +49,5 @@ public class Square extends Character_unit{
 		
 		return;
 	}
-	
-	public void set_color(Color c){
-		character_color=c;
-	}
+
 }
