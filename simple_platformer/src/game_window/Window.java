@@ -1,8 +1,10 @@
 package game_window;
 
+import input.Keyboard_input;
+
 import java.awt.Dimension;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 //This class will create a window for the game to run in
 //the window class handles all the drawing
@@ -16,7 +18,7 @@ public class Window extends JFrame{
 		setDefaultCloseOperation(Window.EXIT_ON_CLOSE);
 		setResizable(false);
 		setFocusable(true);
-		
+	
 		setPreferredSize(new Dimension(Game_panel.width*Game_panel.scale,Game_panel.height*Game_panel.scale));
 		
 		setVisible(true);

@@ -1,9 +1,23 @@
 package game_logic;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
+import characters.Character_unit;
+import characters.Square;
 
 // the idea is this class will handle the game logic behind a platformer
 // given
 public class Platformer extends Game{
+	private ArrayList<Character_unit> characters;
+		
+	public Platformer(){
+		Square main_character = new Square();
+		
+		characters=new ArrayList<Character_unit>();
+		
+		characters.add(main_character);
+	}
 	
 	@Override
 	public void update_pixels(Color[] pixels,int screen_width, int screen_height) {
@@ -11,12 +25,14 @@ public class Platformer extends Game{
 		fill_screen(pixels, Color.gray);
 		
 		draw_floor(pixels,screen_width,screen_height);
-		draw_character(pixels,screen_width,screen_height);
+		draw_characters(pixels,screen_width,screen_height);
 	}
 	
-	private void draw_character(Color[] pixels,int screen_width,int screen_height){
-		//TODO draws our characters on the screen
-		
+	private void draw_characters(Color[] pixels,int screen_width,int screen_height){
+		//draws our characters on the screen calls methods to draw each character
+		for(int i=0;i<characters.size();i++){
+			characters.get(i).draw(pixels,screen_width,screen_height);
+		}
 	}
 
 	private void fill_screen(Color[] pixels, Color c){
@@ -37,5 +53,32 @@ public class Platformer extends Game{
 				pixels[i]=Color.orange;
 			}
 		}
+	}
+	
+	public void update_characters(ArrayList<KeyEvent> pressed_keys){
+		//call methods to update the positions of the characters ( call move() on them)
+		//this is based on the set of characters populated by the keylistener
+		for(int i=0;i<pressed_keys.size();i++){
+			switch(pressed_keys.get(i).getKeyCode()){
+				case KeyEvent.VK_W:
+					characters.get(0).move(0, -1);
+					break;
+				case KeyEvent.VK_A:
+					characters.get(0).move(-1, 0);
+					break;
+				case KeyEvent.VK_S:
+					characters.get(0).move(0, 1);
+					break;
+				case KeyEvent.VK_D:
+					characters.get(0).move(1, 0);
+					break;
+			}
+		}
+		
+		return;
+	}
+	
+	private void detect_collisions(){
+		//TODO loops though the character array to see if any of the characters collide
 	}
 }

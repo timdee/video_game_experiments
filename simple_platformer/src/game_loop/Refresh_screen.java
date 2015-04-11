@@ -16,10 +16,6 @@ class Refresh_screen extends TimerTask{
 	
 	//refresh the panel here
 	public void run(){
-		System.out.print(count + " ");
-		if(count%60==0){System.out.println();}
-		count++;
-		
 		window.refresh();
 	}
 }
