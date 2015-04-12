@@ -80,21 +80,25 @@ public class Platformer extends Game{
 		//call methods to update the positions of the characters ( call move() on them)
 		//this is based on the set of characters populated by the keylistener
 		for(int i=0;i<pressed_keys.size();i++){
+			//handle any key presses
 			switch(pressed_keys.get(i).getKeyCode()){
 				case KeyEvent.VK_W:
-					characters.get(character_id.main.id).move(0, -1);
+					characters.get(character_id.main.id).jump();
 					break;
 				case KeyEvent.VK_A:
 					characters.get(character_id.main.id).move(-1, 0);
 					break;
 				case KeyEvent.VK_S:
-					characters.get(character_id.main.id).move(0, 1);
+					//characters.get(character_id.main.id).move(0, 1);
 					break;
 				case KeyEvent.VK_D:
 					characters.get(character_id.main.id).move(1, 0);
 					break;
 			}
 		}
+		
+		//GRAVITY
+		characters.get(character_id.main.id).apply_gravity();
 		
 		return;
 	}

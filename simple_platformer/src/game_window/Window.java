@@ -23,7 +23,7 @@ public class Window extends JFrame{
 		
 		//give the frame time to add everthing before we make it go
 		try {
-			Thread.sleep(500);
+			Thread.sleep(300);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
