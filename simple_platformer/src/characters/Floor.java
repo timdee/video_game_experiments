@@ -10,7 +10,11 @@ public class Floor extends Character_unit {
 		y_pos=0;
 		x_size=100;
 		y_size=100;
-		speed=10;
+		
+		last_x=x_pos;
+		last_y=y_pos;
+		
+		speed=0;
 		character_color=Color.blue;
 	}
 	
@@ -19,7 +23,11 @@ public class Floor extends Character_unit {
 		y_pos=y;
 		x_size=100;
 		y_size=100;
-		speed=10;
+		
+		last_x=x_pos;
+		last_y=y_pos;
+		
+		speed=0;
 		character_color=Color.blue;
 	}
 	
@@ -28,7 +36,11 @@ public class Floor extends Character_unit {
 		this.y_pos=y_pos;
 		this.x_size=x_size;
 		this.y_size=y_size;
-		speed=10;
+		
+		last_x=x_pos;
+		last_y=y_pos;
+		
+		speed=0;
 		character_color=Color.blue;
 	}
 	

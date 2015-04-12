@@ -13,6 +13,12 @@ public abstract class Character_unit {
 	protected int y_size;
 	protected int speed;
 	
+	protected int last_x;
+	protected int last_y;
+	protected boolean x_moving;
+	protected boolean y_moving;
+	protected boolean stop_moving;
+	
 	//draws a representation of the character to the pixel array passed in
 	public abstract void draw(Color[] pixels,int screen_width,int screen_height);
 	
@@ -21,6 +27,10 @@ public abstract class Character_unit {
 		y_pos=0;
 		x_size=100;
 		y_size=100;
+		
+		last_x=0;
+		last_y=0;
+		
 		speed=10;
 	}
 	
@@ -29,6 +39,10 @@ public abstract class Character_unit {
 		this.y_pos=y_pos;
 		x_size=100;
 		y_size=100;
+		
+		last_x=x_pos;
+		last_y=y_pos;
+		
 		speed=10;
 	}
 	
@@ -37,6 +51,10 @@ public abstract class Character_unit {
 		this.y_pos=y_pos;
 		this.x_size=x_size;
 		this.y_size=y_size;
+		
+		last_x=x_pos;
+		last_y=y_pos;
+		
 		speed=10;
 	}
 	
@@ -49,7 +67,7 @@ public abstract class Character_unit {
 	}
 	
 	public int get_y_pos(){
-		return y_size;
+		return y_pos;
 	}
 	
 	public int get_y_size(){
@@ -58,6 +76,14 @@ public abstract class Character_unit {
 	
 	public void move(int delta_x, int delta_y) {
 		//cause the square to move 1px for the next "delta_x/y*speed" iterations
+		//keep track incase we need to undo this move later
+		
+		//we don't want to update if we're still moving
+		if(!(x_moving || y_moving)){
+			last_x = x_pos;
+			last_y = y_pos;
+		}
+
 		//mods positive negative or zero
 		// if delta_? is 0 than zero, otherwise positive => 1, negative => -1
 		int x_mod=0;
@@ -83,10 +109,24 @@ public abstract class Character_unit {
 		Fluid_movement_task_x task_x=new Fluid_movement_task_x(Math.abs(delta_x)*speed,x_mod);
 		Fluid_movement_task_y task_y=new Fluid_movement_task_y(Math.abs(delta_y)*speed,y_mod);
 		
-		timer.schedule(task_x, 0);
-		timer.schedule(task_y, 0);
+		if(!(stop_moving || x_moving || y_moving)){
+			x_moving=true;
+			y_moving=true;
+			
+			timer.schedule(task_x, 0);
+			timer.schedule(task_y, 0);
+		}
 		
 		return;
+	}
+	
+	public void undo_last_move(){
+		stop_moving=true;
+		
+		x_pos=last_x;
+		y_pos=last_y;
+		
+		stop_moving=false;
 	}
 	
 	class Fluid_movement_task_x extends TimerTask{
@@ -107,12 +147,15 @@ public abstract class Character_unit {
 			exec_remaining--;		
 			
 			//if we still have more executions run again
-			if(exec_remaining>0){
+			if(exec_remaining>0 && !stop_moving){
 				Timer timer=new Timer();
 				
 				Fluid_movement_task_x task_x=new Fluid_movement_task_x(exec_remaining,x_mult);
 				
 				timer.schedule(task_x, refresh_delay);
+			}else{
+				//we are done moving
+				x_moving = false;
 			}
 		}
 	}
@@ -132,15 +175,18 @@ public abstract class Character_unit {
 		public void run(){
 			//update state of timer
 			y_pos+=y_mult;
-			exec_remaining--;		
+			exec_remaining--;	
 			
 			//if we still have more executions run again
-			if(exec_remaining>0){
+			if(exec_remaining>0 && !stop_moving){
 				Timer timer=new Timer();
 				
 				Fluid_movement_task_y task_y=new Fluid_movement_task_y(exec_remaining,y_mult);
 				
 				timer.schedule(task_y, refresh_delay);
+			}else{
+				//we are done moving
+				y_moving = false;
 			}
 		}
 	}

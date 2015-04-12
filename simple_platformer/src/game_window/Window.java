@@ -21,6 +21,13 @@ public class Window extends JFrame{
 	
 		setPreferredSize(new Dimension(Game_panel.width*Game_panel.scale,Game_panel.height*Game_panel.scale));
 		
+		//give the frame time to add everthing before we make it go
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		setVisible(true);
 		pack();
 	}

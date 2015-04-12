@@ -1,5 +1,7 @@
 package game_logic;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -112,15 +114,19 @@ public class Platformer extends Game{
 	
 	private boolean share_space(Character_unit a,Character_unit b){
 		//returns true if character a and character b share space
-		//TODO
+		//create rectanges out of them
+		Rectangle rectangle_a=new Rectangle(a.get_x_pos(),a.get_y_pos(),a.get_x_size(),a.get_y_size());
+		Rectangle rectangle_b=new Rectangle(b.get_x_pos(),b.get_y_pos(),b.get_x_size(),b.get_y_size());
 		
-		return true;
+		//return true if the rectangles intersect
+		return rectangle_a.intersects(rectangle_b);
 	}
 	
 	private void resolve_collision(Character_unit a,Character_unit b){
 		//returns will resolve a shared space between a and b
-		//the method used here is to keep a stationary and move b
-		//TODO
+		//ask a and b to undo their last move
+		a.undo_last_move();
+		b.undo_last_move();
 		
 		return;
 	}
